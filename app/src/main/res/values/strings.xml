@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieExamen</string>
+    <string name="app_name">Busca Tu Pelicula</string>
     <string name="year_format">Year: %s</string>
     <string name="synopsis_format">Synopsis:\n%s</string>
     <string name="duration_format">Duration: %s</string>

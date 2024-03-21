@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://www.omdbapi.com/") // Asegúrate de que esta es la URL base correcta.
+        .baseUrl("https://www.omdbapi.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
