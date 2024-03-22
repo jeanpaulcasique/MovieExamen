@@ -3,7 +3,6 @@ package com.example.movieexamen.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -49,18 +48,19 @@ class MainActivity : AppCompatActivity() {
 
     // Muestra los detalles de una película.
     private fun showMovieDetail(movie: Movie) {
-        // Crea un intent para iniciar DetailActivity.
         val intent = Intent(this, DetailActivity::class.java).apply {
-            // Agrega datos extras al intent que se pasarán a DetailActivity.
             putExtra("TITLE", movie.title)
             putExtra("YEAR", movie.year)
-            putExtra("Poster", movie.poster)
-            putExtra("Director", movie.director)
-            // Repite para los demás atributos de la película.
+            putExtra("POSTER", movie.poster)
+            putExtra("SYNOPSIS", movie.plot)
+            putExtra("DURATION", movie.runtime)
+            putExtra("DIRECTOR", movie.director)
+            putExtra("GENRE", movie.genre)
+            putExtra("COUNTRY", movie.country)
         }
-
-        startActivity(intent) // Inicia DetailActivity.
+        startActivity(intent)
     }
+
 
     // FUNCION QUE OBTIENE LAS PELICULAS DEL API
     private fun fetchMovies(searchQuery: String) {
@@ -86,20 +86,20 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // Infla el menú de opciones y maneja el comportamiento de búsqueda.
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // Infla el menú.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        // Configura la funcionalidad de búsqueda.
-        val searchItem = menu?.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as? SearchView
 
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            // Maneja el evento de envío de búsqueda.
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                // Verifica que la consulta no esté vacía y realiza la búsqueda.
-                if (!query.isNullOrEmpty()) {
-                    fetchMovies(query)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // INFLO EL MENU CON EL ID DEL MENU
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        val searchItem = menu?.findItem(R.id.action_search) // CREO UNA VARIABLE PARA INSTANCIAR EL BUSCADOR Y SE ASIGNO COMO VALOR EL ID DEL BOTON BUSCAR
+        val searchView = searchItem?.actionView as? SearchView // CREO UNA VARIABLE PARA INSTANCIARLO CON LA CLASE SearchView
+
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {  // Inicia la escucha de eventos en searchView, como la escritura o envío de texto de búsqueda.
+
+            override fun onQueryTextSubmit(query: String?): Boolean {   // Esta función maneja el evento cuando el usuario envía o confirma su búsqueda presionando el botón de buscar en el teclado.
+
+                if (!query.isNullOrEmpty()) {  // Verifica si la cadena de búsqueda (query) no es null y no está vacía.
+                    fetchMovies(query)   // Llama a la función fetchMovies con la consulta de búsqueda para buscar películas.
                     searchView.clearFocus() // Oculta el teclado al buscar.
                 }
                 return true

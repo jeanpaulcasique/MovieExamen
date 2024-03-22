@@ -7,7 +7,10 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("/")
     fun searchMovies(
-        @Query("s") searchTerm: String,
+        @Query("s") imdbId: String,
         @Query("apikey") apiKey: String = "fde4bf0f"
     ): Call<MovieResponse>
+
 }
+
+
